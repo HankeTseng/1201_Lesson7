@@ -27,11 +27,21 @@ msg.attach(content)
 #     encoders.encode_base64(part) # 檔案加密
 #     part.add_header("Content-Disposition",'attachment; filename="test.txt"')
 # msg.attach(part)
-with open("Python send email.pdf",'rb') as f:
+
+# with open("Python send email.pdf",'rb') as f:
+#     part = MIMEBase("application", "octet-stream")
+#     part.set_payload(f.read())
+#     encoders.encode_base64(part) # 檔案加密
+#     part.add_header("Content-Disposition",'attachment; filename="Python send email.pdf"')
+# msg.attach(part)
+
+# 假如有中文的檔名的處理方式
+with open("test.txt",'rb') as f:
     part = MIMEBase("application", "octet-stream")
     part.set_payload(f.read())
     encoders.encode_base64(part) # 檔案加密
-    part.add_header("Content-Disposition",'attachment; filename="Python send email.pdf"')
+    header = Header("中文.txt","utf-8").encode() # 假如有中文的檔名的處理方式
+    part.add_header("Content-Disposition",'attachment; filename="' + header + '"') # ' ' 括住"字串
 msg.attach(part)
 
 context = ssl.create_default_context()
